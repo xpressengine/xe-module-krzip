@@ -1,0 +1,75 @@
+        	<style>
+        	.krZip .box { margin:10px 0 10px 0; }
+        	.krZip .box ul { padding-left: 0; margin: 0; }
+        	.krZip .box ul li { display: inline; }
+        	.krZip .addr_viewer { padding: 10px; border: 1px solid #aaa; }
+        	.krZip .old_address { width: 400px; }
+        	
+        	</style>
+        	
+        	<div class="krZip">
+				<input type="text" class="old_address" cond="count($krzip->values)" readonly="readonly" value="{$krzip->values[0]} {$krzip->values[1]}">
+				<input type="hidden" class="addr_first" name="{$krzip->column_name}[]" value="{$krzip->values[0]}" />
+				<input type="hidden" class="addr_second" name="{$krzip->column_name}[]" value="{$krzip->values[1]}" />
+				<button type="button" class="x_btn  start_zip" cond="count($krzip->values)">{$lang->cmd_kr_address_modify}</button>
+				<button type="button" class="x_btn  start_zip" cond="!count($krzip->values)">{$lang->cmd_kr_address_input}</button>
+				
+				<div class="addr_viewer box">
+					<span class="addr">{$krzip->values[0]} {$krzip->values[1]}</span>
+					<button type="button" class="btn reselect">{$lang->cmd_reselect}</button>
+				</div>
+				<div class="addr1_selector box">
+					<p>{$lang->cmd_kr_address_addr1}</p>
+					<ul>
+					</ul>
+				</div>
+
+				<div class="addr2_selector box">
+					<p>{$lang->cmd_kr_address_addr2}</p>
+					<ul>
+					</ul>
+				</div>
+
+				<div class="addr3_selector box">
+					<p>'<span></span>'{$lang->cmd_select_detail_address}</p>
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>{$lang->street_house_address}</td>
+								<th>{$lang->zipcode}</td>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="2">
+									<button type="button" class="btn more_search">더보기</button>
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				
+				<div class="addr3_input box">
+					<p>{$lang->cmd_kr_address_detail}</p>
+					<input type="text" value="" class="addr3_input" />
+					<button type="button" class="btn submit_addr3">검색</button>
+					<p class="info_search">
+						{$lang->about_kr_address_detail}
+					</p>
+				</div>
+				
+				<div class="addr4_input box">
+					<p>{$lang->cmd_kr_address_etc}</p>
+					<input type="text" value="" class="addr4_input">
+					<button type="button" class="btn submit_addr4">{$lang->cmd_complete}</button>
+				</div>
+
+			</div>
+			<script>
+			jQuery('.krZip').krZip({hostname: '{$krzip->hostname}', port: {$krzip->port} });
+			</script>
+			
+			
+			
