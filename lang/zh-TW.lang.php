@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @file   modules/krzip/lang/zh-TW.lang.php
-     * @author NHN (developers@xpressengine.com) 翻譯：royallin
+     * @author NAVER (developers@xpressengine.com) 翻譯：royallin
      * @brief  韓國郵編(krzip)模組正體中文語言
      **/
 

@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @class  krzipAdminView
-     * @author NHN (developers@xpressengine.com)
+     * @author NAVER (developers@xpressengine.com)
      * @brief admin view class of the krzip module 
      **/
 

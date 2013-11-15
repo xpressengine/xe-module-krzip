@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @file   modules/krzip/lang/ko.lang.php
-     * @author NHN (developers@xpressengine.com)
+     * @author NAVER (developers@xpressengine.com)
      * @brief  한국어 언어팩 (기본적인 내용만 수록)
      **/
 

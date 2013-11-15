@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
 /*			░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 			░░  * @File   :  common/lang/vi.lang.php                                              ░░
-			░░  * @Author :  NHN (developers@xpressengine.com)                                                 ░░
+			░░  * @Author :  NAVER (developers@xpressengine.com)                                                 ░░
 			░░  * @Trans  :  Đào Đức Duy (ducduy.dao.vn@vietxe.net)								  ░░
 			░░	* @Website:  http://vietxe.net													  ░░
 			░░  * @Brief  :  Vietnamese Language Pack (Only basic words are included here)        ░░
