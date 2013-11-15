@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @file   modules/krzip/lang/jp.lang.php
-     * @author NHN (developers@xpressengine.com) 翻訳：RisaPapa、ミニミ
+     * @author NAVER (developers@xpressengine.com) 翻訳：RisaPapa、ミニミ
      * @brief  日本語言語パッケージ（基本的な内容のみ）
      **/
 

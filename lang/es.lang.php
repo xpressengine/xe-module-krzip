@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @archivo  modules/krzip/lang/es.lang.php
-     * @autor NHN (developers@xpressengine.com)
+     * @autor NAVER (developers@xpressengine.com)
      * @sumario  Paquete del idioma espanol (Solo los contenidos basicos)
      **/
 

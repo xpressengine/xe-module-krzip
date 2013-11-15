@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @file   modules/krzip/lang/fr.lang.php
-     * @author NHN (developers@xpressengine.com)  Traduit par Pierre Duvent <PierreDuvent@gmail.com>
+     * @author NAVER (developers@xpressengine.com)  Traduit par Pierre Duvent <PierreDuvent@gmail.com>
      * @brief  Paque du langage en français pour le module de Code postal coréen
      **/
 
