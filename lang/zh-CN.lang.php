@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @file   modules/krzip/lang/zh-CN.lang.php
-     * @author NHN (developers@xpressengine.com)
+     * @author NAVER (developers@xpressengine.com)
      * @brief  简体中文语言包（收录了基本内容）
      **/
 

@@ -1,7 +1,9 @@
 <?php
+/* Copyright (C) NAVER <http://www.navercorp.com> */
+
     /**
      * @class  krzipModel
-     * @author NHN (developers@xpressengine.com)
+     * @author NAVER (developers@xpressengine.com)
      * @brief model class of the krzip module
      **/
 
