@@ -16,6 +16,32 @@
         }
 
         /**
+         * @brief return zip code search template
+         * offer krzip code search template for other modules
+         **/
+        function getKrzipCodeSearchHtml($column_name, $values) {
+        	
+        	$oModuleModel = &getModel('module');
+        	$config = $oModuleModel->getModuleConfig('krzip');
+        	if($config->krzip_server_hostname) $this->hostname = $config->krzip_server_hostname;
+        	if($config->krzip_server_port) $this->port = $config->krzip_server_port;
+        	if($config->krzip_server_query) $this->query = $config->krzip_server_query;
+
+        	$krzip = new stdClass();
+        	$krzip->api_url = $this->hostname.($this->port?':'.$this->port:'').$this->query;
+        	$krzip->column_name = $column_name;
+        	$krzip->values = $values;
+        	
+        	// load js file
+        	Context::loadFile(array($this->module_path.'tpl/js/krzip_search.js'), true);
+        	
+			Context::set('krzip', $krzip);
+			
+			$oTemplate = &TemplateHandler::getInstance();
+			return $oTemplate->compile($this->module_path.'tpl', 'krzip');
+        }
+        
+        /**
          * @brief Zip Code Search
          * Request a zip code to the server with user-entered address
          **/
