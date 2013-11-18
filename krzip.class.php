@@ -11,8 +11,8 @@
 
         var $hostname = 'kr.zip.zeroboard.com';
         var $port = 80;
-        var $query = '/server.php?addr3=';
-
+        var $query = 'krzip/server.php';
+        
         /**
          * @brief Implement if additional tasks are necessary when installing
          **/

@@ -1,15 +1,17 @@
+//TODO: 검색어 strong 처리, 더보기 대신 prev/next
+
+
 (function($) {
-
+	
+	const STEP_INIT = 0;
+	const STEP_SELECT_ADDR1 = 1;
+	const STEP_SELECT_ADDR2 = 2;
+	const STEP_INPUT_ADDR3 = 3;
+	const STEP_SELECT_ADDR3 = 4;
+	const STEP_INPUT_ADDR4 = 5;
+	const STEP_COMPLETE = 6;
+	
 	$.fn.krZip = function(options) {
-
-		const STEP_SELECT_ADDR1 = 1;
-		const STEP_SELECT_ADDR2 = 2;
-		const STEP_INPUT_ADDR3 = 3;
-		const STEP_SELECT_ADDR3 = 4;
-		const STEP_INPUT_ADDR4 = 5;
-		const STEP_COMPLETE = 6;
-		
-		
 		
 		// support mutltiple elements
 		if (this.length > 1) {
@@ -18,21 +20,22 @@
 			});
 			return this;
 		}
+		if($(this).data('krzip')) return this;
+		$(this).data('krzip',true);
 		
-		var settings = $.extend({}, options, {hostname:'http://cloud1.akasima1.cafe24.com/krzip'});
+		var settings = $.extend({}, options);
 		var input_addr = []; // 사용자로부터 입력, 선택되는 정보, 0:광역시도/1:시군구/2:사용자가 입력한 상세검색주소
-		var addr_first =''; // 사용자가 선택한 도로주소
-		var addr_zipcode = '';
-		var addr_second = ''; // 사용자가 입력한 나머지 주소
-
+		var new_addr_first =''; // 사용자가 선택한 도로주소
+		var new_addr_second = ''; // 사용자가 입력한 나머지 주소
 		var step = 0;
-		var el = this; // only one element
+		
 		var ui = {
-			'oldAddress' : this.find('.old_address'),
-			'addr_first' : this.find('input.addr_first'),
-			'addr_second' : this.find('input.addr_second'),
-			'startBtn' : this.find('button.start_zip'),
-			'viewer' : this.find('.addr_viewer.box'),
+			'indicator' : this.find('.addr_indicator.box'), // view box
+			'delButton' : this.find('.addr_indicator.box button.delete'),
+			'cancelButton' : this.find('.addr_indicator.box button.cancel'),
+			'currentAddress' : this.find('.current_address'), // show current
+			'addrSecond' : this.find('input.addr_second'), // current_address
+			'addrFirst' : this.find('input.addr_first'), // current_address
 			'addr1selector' : this.find('.addr1_selector.box'),
 			'addr2selector' : this.find('.addr2_selector.box'),
 			'addr3input' : this.find('.addr3_input.box'),
@@ -41,19 +44,32 @@
 		}
 		var search_next = 0; // 상세주소리스트 offset
 
-		// [주소입력]버튼을 클릭
-		ui.startBtn.click(function() {
-			goStep1();
+		// 주소창 클릭
+		ui.currentAddress.focus(function() {
+			if(step == STEP_INIT || step == STEP_COMPLETE) goStep1();
 		});
+		
+		// 삭제버튼 클릭
+		ui.delButton.click(function(){
+			ui.addrFirst.val('');
+			ui.addrSecond.val('');
+			ui.currentAddress.val('');
+		})
+		
+		// 취소버튼 클릭
+		ui.cancelButton.click(function(){
+			ui.currentAddress.val(ui.addrFirst.val() + ' ' + ui.addrSecond.val());
+			goStep0();
+		})
 
 		// 광역시도 주소(addr1)를 선택
-		ui.addr1selector.on('click','a',function() {
+		ui.addr1selector.on('click','button',function() {
 			goStep2($(this).text());
 			return false;
 		});
 
 		// 시/군/구 주소(addr2)를 선택
-		ui.addr2selector.on('click','a',function() {
+		ui.addr2selector.on('click','button',function() {
 			goStep3($(this).text());
 			return false;
 		});
@@ -72,9 +88,8 @@
 		});
 		
 		// 상세주소(addr3)를 선택
-		ui.addr3selector.on('click', 'table a', 'click', function(){
-			goStep5($(this).text(),$(this).parent('td').next('td').text());
-			
+		ui.addr3selector.on('click', 'table button', 'click', function(){
+			goStep5($(this).parents('tr').find('td:first span').text(),$(this).parents('tr').find('td:eq(1)').text());
 			return false;
 		});
 		
@@ -87,7 +102,7 @@
 		// 나머지주소(addr4) 입력후 [완료]버튼을 클릭
 		ui.addr4input.find('button.submit_addr4').click(function(){
 			var input = ui.addr4input.find('.addr4_input').val();
-			if(input) goStep6(input);
+			goStep6(input);
 			return false;
 		});
 		// 나머지주소(addr4) 입력후 '엔터'
@@ -97,67 +112,44 @@
 			return false;
 		});
 
-		// 재선택 버튼 클릭
-		ui.viewer.find('button.reselect').click(function() {
+		var setIndicator = function() {
+			// currentAddress 셋팅
+			if(new_addr_first) ui.currentAddress.val(new_addr_first + new_addr_second);
+			else ui.currentAddress.val(input_addr.join(' '));
+		}
 
-			addr_first = '';
-			switch (step) {
-			case STEP_SELECT_ADDR2:
-				goStep1();
-				break;
-			case STEP_INPUT_ADDR3:
-			case STEP_SELECT_ADDR3:
-				goStep2();
-				break;
-			case STEP_INPUT_ADDR4:
-				goStep3();
-				break;
-			case STEP_COMPLETE:
-				goStep1();
-				break;
-			default:
-				break;
-			}
-
-		});
-		
-		var init = function() {
+		var goStep0 = function() {
 			// step 초기화
-			step = 0;
+			step = STEP_INIT;
 			input_addr = ['','',''];
+			new_addr_first = new_addr_second = '';
 			// element 정리
-			ui.startBtn.show();
-			ui.viewer.hide();
-			ui.addr1selector.hide();
-			ui.addr2selector.hide();
-			ui.addr3input.hide();
-			ui.addr3selector.hide();
-			ui.addr4input.hide();
+			ui.cancelButton.hide();
+			ui.delButton.show();
+			ui.addr1selector.slideUp();
+			ui.addr2selector.slideUp();
+			ui.addr3input.slideUp();
+			ui.addr3selector.slideUp();
+			ui.addr4input.slideUp();
 		}
 		
-		var setViewer = function() {
-			if(addr_first) ui.viewer.find('span.addr').text(addr_first+' ('+addr_zipcode+') '+addr_second);
-			else ui.viewer.find('span.addr').text(input_addr.join(' '));
-		}
-
 		var goStep1 = function() {
 
 			// step1: 광역시도 선택 단계
 			step = STEP_SELECT_ADDR1;
 			input_addr = ['','',''];
-			addr_first = addr_second = addr_zipcode = '';
+			new_addr_first = new_addr_second = '';
 
 			// 광역시도 리스트 얻어와서 리스트에 넣기
-			//http://cloud1.akasima1.cafe24.com/krzip/server.php?request=addr1
 			ui.addr1selector.find('ul').empty();
 			$.ajax({
-				url : settings.hostname+'/server.php?request=addr1',
+				url : settings.api_url+'?request=addr1',
 				dataType : 'jsonp',
 				success : function(res)
 				{
 					if(res.result) {
 						$.each(res.values, function(i){
-							ui.addr1selector.find('ul').append($('<li><a href="#">'+this+'</a> </li>'));
+							ui.addr1selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
 						})
 					}
 
@@ -165,13 +157,13 @@
 			});
 
 			// element 정리
-			ui.startBtn.hide();
-			ui.viewer.slideUp();
+			ui.cancelButton.show();
+			ui.delButton.hide();
 			ui.addr1selector.slideDown();
 			ui.addr2selector.slideUp();
 			ui.addr3input.slideUp();
 			ui.addr3selector.slideUp();
-			ui.addr4input.hide();
+			ui.addr4input.slideUp();
 		}
 
 		var goStep2 = function() {
@@ -184,27 +176,26 @@
 			if (arguments.length) input_addr[0] = arguments[0];
 			
 			// 시/군/구 리스트 얻어와서 리스트에 넣기
-			//http://cloud1.akasima1.cafe24.com/krzip/server.php?request=addr2&search_addr1=xxx
 			ui.addr2selector.find('ul').empty();
 			$.ajax({
-				url : settings.hostname+'/server.php?request=addr2&search_addr1='+input_addr[0],
+				url : settings.api_url+'?request=addr2&search_addr1='+input_addr[0],
 				dataType : 'jsonp',
 				success : function(res)
 				{
 					if(res.result) {
 						$.each(res.values, function(i){
-							ui.addr2selector.find('ul').append($('<li><a href="#">'+this+'</a> </li>'));
+							ui.addr2selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
 						})
 					}
 
 				}
 			});
 			
-			setViewer();
+			setIndicator();
 			
 			// element 정리
-			ui.startBtn.hide();
-			ui.viewer.slideDown();
+			ui.cancelButton.show();
+			ui.delButton.hide();
 			ui.addr1selector.slideUp();
 			ui.addr2selector.slideDown();
 			ui.addr3input.slideUp();
@@ -220,11 +211,11 @@
 
 			// validate addr2
 			if (arguments.length) input_addr[1] = arguments[0];
-			setViewer();
+			setIndicator();
 
 			// element 정리
-			ui.startBtn.hide();
-			ui.viewer.slideDown();
+			ui.cancelButton.show();
+			ui.delButton.hide();
 			ui.addr1selector.slideUp();
 			ui.addr2selector.slideUp();
 			ui.addr3input.slideDown();
@@ -242,11 +233,9 @@
 			ui.addr3selector.find('p span').text(input_addr[2]);
 
 
-			// 시/군/구 리스트 얻어와서 리스트에 넣기
-			//http://cloud1.akasima1.cafe24.com/krzip/server.php?search_word=xxx&search_addr1=xxx&search_addr2=xxxx&next=0
-			if(search_next == 0) ui.addr3selector.find('table tbody').empty();
-			var url = settings.hostname+'/server.php?search_word='+input_addr[2]+'&search_addr1='+input_addr[0]+'&search_addr2='+input_addr[1]+'&next='+search_next;
-			console.log(url);
+			// 상세주소 리스트 얻어와서 리스트에 넣기
+			ui.addr3selector.find('table tbody').empty(); // 더보기가 아닐 경우 목록 비우기
+			var url = settings.api_url+'?search_word='+input_addr[2]+'&search_addr1='+input_addr[0]+'&search_addr2='+input_addr[1]+'&next='+search_next;
 			$.ajax({
 				url : url,
 				dataType : 'jsonp',
@@ -254,13 +243,12 @@
 				{
 					if(res.result) {
 						$.each(res.values.address, function(i){
-							console.log(this);
 							var bdname = this.bdname?' ('+this.bdname+')':'';
-							ui.addr3selector.find('table tbody').append($('<tr><td>[도로명] <a href="#">'+this.addr1+' '+this.addr2_new + bdname +'</a><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td></tr>'));
+							ui.addr3selector.find('table tbody').append($('<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button">선택</button></td></tr>'));
 						});
 						search_next = res.values.next;
 
-						//더보기 감추기
+						// 더보기 감추기
 						if(search_next == -1) ui.addr3selector.find('table tfoot').hide();
 						else ui.addr3selector.find('table tfoot').show();
 					}
@@ -268,11 +256,9 @@
 				}
 			});
 			
-			
-			
 			// element 정리
-			ui.startBtn.hide();
-			ui.viewer.slideDown();
+			ui.cancelButton.show();
+			ui.delButton.hide();
 			ui.addr1selector.slideUp();
 			ui.addr2selector.slideUp();
 			ui.addr3input.slideDown();
@@ -287,14 +273,14 @@
 
 			// validate addr3
 			if (arguments.length) {
-				addr_first = arguments[0];
-				addr_zipcode = arguments[1];
+				new_addr_first = arguments[0] + ' ('+ arguments[1] + ') '; 
 			}
-			setViewer();
+			
+			setIndicator();
 			
 			// element 정리
-			ui.startBtn.hide();
-			ui.viewer.slideDown();
+			ui.cancelButton.show();
+			ui.delButton.hide();
 			ui.addr1selector.slideUp();
 			ui.addr2selector.slideUp();
 			ui.addr3input.slideUp();
@@ -308,18 +294,17 @@
 			step = STEP_COMPLETE;
 
 			// validate addr4
-			if (arguments.length) addr_second = arguments[0];
-			setViewer();
+			if (arguments.length) new_addr_second = arguments[0];
+			setIndicator();
 			
 			// 새주소로 설정 변경
-			ui.addr_first.val(addr_first+' ('+addr_zipcode+')');
-			ui.addr_second.val(addr_second);
+			ui.addrFirst.val(new_addr_first);
+			ui.addrSecond.val(new_addr_second);
 			
 			// element 정리
-			ui.oldAddress.val(ui.viewer.find('span.addr').text());
-			ui.oldAddress.slideDown();
-			ui.startBtn.slideDown();
-			ui.viewer.slideUp();
+			ui.cancelButton.hide();
+			ui.delButton.show();
+			ui.indicator.slideDown();
 			ui.addr1selector.slideUp();
 			ui.addr2selector.slideUp();
 			ui.addr3input.slideUp();
@@ -327,11 +312,9 @@
 			ui.addr4input.slideUp();
 		}
 		
-		init();
+		goStep0();
 
 		return this;
 	}
-
-	$('.krZip').krZip();
 
 })(jQuery);
