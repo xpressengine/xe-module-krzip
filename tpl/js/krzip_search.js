@@ -1,6 +1,3 @@
-//TODO: 검색어 strong 처리, 더보기 대신 prev/next
-
-
 (function($) {
 	
 	const STEP_INIT = 0;
@@ -30,17 +27,17 @@
 		var step = 0;
 		
 		var ui = {
-			'indicator' : this.find('.addr_indicator.box'), // view box
-			'delButton' : this.find('.addr_indicator.box button.delete'),
-			'cancelButton' : this.find('.addr_indicator.box button.cancel'),
-			'currentAddress' : this.find('.current_address'), // show current
-			'addrSecond' : this.find('input.addr_second'), // current_address
-			'addrFirst' : this.find('input.addr_first'), // current_address
-			'addr1selector' : this.find('.addr1_selector.box'),
-			'addr2selector' : this.find('.addr2_selector.box'),
-			'addr3input' : this.find('.addr3_input.box'),
-			'addr3selector' : this.find('.addr3_selector.box'),
-			'addr4input' : this.find('.addr4_input.box')
+			'indicator' : $(this.find('.addr_indicator.box')), // view box
+			'currentAddress' : $(this.find('.current_address')), // show current
+			'addrFirst' : $(this.find('input.addr_first')), // current_address
+			'addrSecond' : $(this.find('input.addr_second')), // current_address
+			'delButton' : $(this.find('.addr_indicator.box button.delete')).data('status',[1,0,0,0,0,0,1]),
+			'cancelButton' : $(this.find('.addr_indicator.box button.cancel')).data('status',[0,1,1,1,1,1,0]),
+			'addr1selector' : $(this.find('.addr1_selector.box')).data('status',[0,1,0,0,0,0,0]),
+			'addr2selector' : $(this.find('.addr2_selector.box')).data('status',[0,0,1,0,0,0,0]),
+			'addr3input' : $(this.find('.addr3_input.box')).data('status',[0,0,0,1,1,0,0]),
+			'addr3selector' : $(this.find('.addr3_selector.box')).data('status',[0,0,0,0,1,0,0]),
+			'addr4input' : $(this.find('.addr4_input.box')).data('status',[0,0,0,0,0,1,0])
 		}
 		var search_next = 0; // 상세주소리스트 offset
 
@@ -116,6 +113,16 @@
 			// currentAddress 셋팅
 			if(new_addr_first) ui.currentAddress.val(new_addr_first + new_addr_second);
 			else ui.currentAddress.val(input_addr.join(' '));
+		};
+		
+		var setUI = function() {
+			
+			for(var id in ui) {
+				if(ui[id].data('status') == undefined) continue;
+				if(ui[id].data('status')[step]) ui[id].show();
+				else ui[id].hide();
+			}
+			
 		}
 
 		var goStep0 = function() {
@@ -157,13 +164,7 @@
 			});
 
 			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideDown();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideUp();
+			setUI();
 		}
 
 		var goStep2 = function() {
@@ -194,13 +195,7 @@
 			setIndicator();
 			
 			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideDown();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.hide();
+			setUI();
 		}
 
 		var goStep3 = function() {
@@ -214,13 +209,7 @@
 			setIndicator();
 
 			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideDown();
-			ui.addr3selector.slideUp();
-			ui.addr4input.hide();
+			setUI();
 		}
 
 		var goStep4 = function() {
@@ -230,7 +219,7 @@
 
 			// validate addr3
 			if (arguments.length) input_addr[2] = arguments[0];
-			ui.addr3selector.find('p span').text(input_addr[2]);
+			ui.addr3selector.find('p strong').text(input_addr[2]);
 
 
 			// 상세주소 리스트 얻어와서 리스트에 넣기
@@ -251,31 +240,22 @@
 								html += '<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button" class="sel_detail">선택</button></td></tr>';
 							});
 							
-							html = html.replace(input_addr[2], '<strong>'+input_addr[2]+'</strong>', 'g');
+							html = html.replace(new RegExp(input_addr[2], 'g'),'<strong>'+input_addr[2]+'</strong>');
 							ui.addr3selector.find('table tbody').append($(html));
-							
 							ui.addr3selector.find('table tfoot p.nomore').hide();
 						} else if(search_next == 0){
 							ui.addr3selector.find('table tfoot p.nomore').show();
 						}
 						
 						search_next = res.values.next;
-						if(search_next == -1 )
-							ui.addr3selector.find('table tfoot button.more_search').hide();
-						else
-							ui.addr3selector.find('table tfoot button.more_search').show();
+						if(search_next == -1 ) ui.addr3selector.find('table tfoot button.more_search').hide();
+						else ui.addr3selector.find('table tfoot button.more_search').show();
 					}
 				}
 			});
 			
 			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideDown();
-			ui.addr3selector.slideDown();
-			ui.addr4input.hide();
+			setUI();
 		}
 
 		var goStep5 = function() {
@@ -291,13 +271,7 @@
 			setIndicator();
 			
 			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideDown();
+			setUI();
 		}
 		
 		var goStep6 = function() {
@@ -314,18 +288,10 @@
 			ui.addrSecond.val(new_addr_second);
 			
 			// element 정리
-			ui.cancelButton.hide();
-			ui.delButton.show();
-			ui.indicator.slideDown();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideUp();
+			setUI();
 		}
 		
 		goStep0();
-
 		return this;
 	}
 
