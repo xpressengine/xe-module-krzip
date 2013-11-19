@@ -1,10 +1,4 @@
-        	<style>
-        	.krZip .box { margin:10px 0 10px 0; }
-        	.krZip .box ul { padding-left: 0; margin: 0; }
-        	.krZip .box ul li { display: inline; }
-        	.krZip .current_address { width: 400px; }
-        	
-        	</style>
+<load target="css/krzip.css" />
         	
         	<div class="krZip">
 				<input type="hidden" class="addr_first" name="{$krzip->column_name}[]" value="{$krzip->values[0]}" />
@@ -16,19 +10,19 @@
 					<button type="button" class="btn cancel">{$lang->cmd_cancel}</button>
 				</div>
 				
-				<div class="addr1_selector box">
+				<div class="addr1_selector box" style="display:none;">
 					<p>{$lang->cmd_kr_address_addr1}</p>
 					<ul>
 					</ul>
 				</div>
 
-				<div class="addr2_selector box">
+				<div class="addr2_selector box" style="display:none;">
 					<p>{$lang->cmd_kr_address_addr2}</p>
 					<ul>
 					</ul>
 				</div>
 				
-				<div class="addr3_input box">
+				<div class="addr3_input box" style="display:none;">
 					<p>{$lang->cmd_kr_address_detail}</p>
 					<input type="text" value="" class="addr3_input" />
 					<button type="button" class="btn submit_addr3">검색</button>
@@ -37,29 +31,35 @@
 					</p>
 				</div>
 
-				<div class="addr3_selector box">
+				<div class="addr3_selector box" style="display:none;">
 					<p>'<span></span>'{$lang->cmd_select_detail_address}</p>
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th>{$lang->street_house_address}</th>
-								<th>{$lang->zipcode}</th>
-								<th>{$lang->cmd_select}</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-						<tfoot>
-							<tr>
-								<th colspan="2">
-									<button type="button" class="btn more_search">{$lang->more}</button>
-								</th>
-							</tr>
-						</tfoot>
-					</table>
+					<div class="wrap">
+						<div class="scroll_fixed"></div>
+						<div class="scroll_move">
+							<table class="table">
+								<thead>
+									<tr>
+										<th><div class="th_inner">{$lang->street_house_address}</div></th>
+										<th><div class="th_inner">{$lang->zipcode}</div></th>
+										<th><div class="th_inner">{$lang->cmd_select}</div></th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="3">
+											<p class="nomore" style="display:none;">검색어와 일치하는 주소가 없습니다.</p>
+											<button type="button" class="btn more_search">{$lang->more}</button>
+										</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
 				</div>
 				
-				<div class="addr4_input box">
+				<div class="addr4_input box" style="display:none;">
 					<p>{$lang->cmd_kr_address_etc}</p>
 					<input type="text" value="" class="addr4_input">
 					<button type="button" class="btn submit_addr4">{$lang->cmd_complete}</button>

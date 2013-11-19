@@ -88,7 +88,7 @@
 		});
 		
 		// 상세주소(addr3)를 선택
-		ui.addr3selector.on('click', 'table button', 'click', function(){
+		ui.addr3selector.on('click', 'table button.sel_detail', 'click', function(){
 			goStep5($(this).parents('tr').find('td:first span').text(),$(this).parents('tr').find('td:eq(1)').text());
 			return false;
 		});
@@ -234,7 +234,7 @@
 
 
 			// 상세주소 리스트 얻어와서 리스트에 넣기
-			ui.addr3selector.find('table tbody').empty(); // 더보기가 아닐 경우 목록 비우기
+			if(search_next == 0) ui.addr3selector.find('table tbody').empty(); // 더보기가 아닐 경우 목록 비우기
 			var url = settings.api_url+'?search_word='+input_addr[2]+'&search_addr1='+input_addr[0]+'&search_addr2='+input_addr[1]+'&next='+search_next;
 			$.ajax({
 				url : url,
@@ -242,17 +242,29 @@
 				success : function(res)
 				{
 					if(res.result) {
-						$.each(res.values.address, function(i){
-							var bdname = this.bdname?' ('+this.bdname+')':'';
-							ui.addr3selector.find('table tbody').append($('<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button">선택</button></td></tr>'));
-						});
+						var html = '';
+						
+						if(res.values.address.length) {
+							
+							$.each(res.values.address, function(i){
+								var bdname = this.bdname?' ('+this.bdname+')':'';
+								html += '<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button" class="sel_detail">선택</button></td></tr>';
+							});
+							
+							html = html.replace(input_addr[2], '<strong>'+input_addr[2]+'</strong>', 'g');
+							ui.addr3selector.find('table tbody').append($(html));
+							
+							ui.addr3selector.find('table tfoot p.nomore').hide();
+						} else if(search_next == 0){
+							ui.addr3selector.find('table tfoot p.nomore').show();
+						}
+						
 						search_next = res.values.next;
-
-						// 더보기 감추기
-						if(search_next == -1) ui.addr3selector.find('table tfoot').hide();
-						else ui.addr3selector.find('table tfoot').show();
+						if(search_next == -1 )
+							ui.addr3selector.find('table tfoot button.more_search').hide();
+						else
+							ui.addr3selector.find('table tfoot button.more_search').show();
 					}
-
 				}
 			});
 			

@@ -1,0 +1,13 @@
+.krZip .box { margin:10px 0 10px 0; }
+.krZip .box ul { padding-left: 0; margin: 0; }
+.krZip .box ul li { display: inline; }
+.krZip .current_address { width: 400px; }
+.krZip th, .krZip td { border-top: 1px #ddd solid; backgound: #fff; }
+.krZip .addr3_selector .wrap{ height:500px; padding-bottom: 42px; /* margin:0 auto; */ position:relative;}
+.krZip .addr3_selector .scroll_fixed{width:100%; height:24px; background:#eee; padding:8px 0; border-top:1px #ccc solid; border-bottom: 1px #ccc solid; }
+.krZip .addr3_selector .scroll_move{overflow-x:hidden; overflow-y:scroll; width:100%; height:100%;}
+.krZip .addr3_selector table{width: 100%; overflow-x: hidden; overflow-y: scroll;}
+.krZip .addr3_selector table th{height:0px; padding:0 8px; }
+.krZip .addr3_selector table td strong { color: #ff0000; }
+.krZip .addr3_selector .th_inner{position: absolute; top:0; line-height: 36px; text-align: left;}
+.krZip .addr3_selector table tfoot td { text-align: center; }
