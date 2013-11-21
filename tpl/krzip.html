@@ -34,9 +34,9 @@
 				<div class="addr3_selector box" style="display:none;">
 					<p>'<strong></strong>'{$lang->cmd_select_detail_address}</p>
 					<div class="wrap">
-						<div class="scroll_fixed"></div>
-						<div class="scroll_move">
-							<table class="table">
+						<div class="scroll_head"></div>
+						<div class="scroll_body">
+							<table>
 								<thead>
 									<tr>
 										<th><div class="th_inner">{$lang->street_house_address}</div></th>
@@ -46,15 +46,12 @@
 								</thead>
 								<tbody>
 								</tbody>
-								<tfoot>
-									<tr>
-										<td colspan="3">
-											<p class="nomore" style="display:none;">검색어와 일치하는 주소가 없습니다.</p>
-											<button type="button" class="btn more_search">{$lang->more}</button>
-										</td>
-									</tr>
-								</tfoot>
 							</table>
+						</div>
+						<div class="scroll_foot">
+							<p class="nomore" style="display:none;">검색어와 일치하는 주소가 없습니다.</p>
+							<p class="islast" style="display:none;"> </p>
+							<button type="button" class="btn more_search">{$lang->more}</button>
 						</div>
 					</div>
 				</div>

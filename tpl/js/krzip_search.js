@@ -37,7 +37,7 @@
 			'addr2selector' : $(this.find('.addr2_selector.box')).data('status',[0,0,1,0,0,0,0]),
 			'addr3input' : $(this.find('.addr3_input.box')).data('status',[0,0,0,1,1,0,0]),
 			'addr3selector' : $(this.find('.addr3_selector.box')).data('status',[0,0,0,0,1,0,0]),
-			'addr4input' : $(this.find('.addr4_input.box')).data('status',[0,0,0,0,0,1,0])
+			'addr4input' : $(this.find('.addr4_input.box')).data('status',[0,0,0,0,0,1,0]),
 		}
 		var search_next = 0; // 상세주소리스트 offset
 
@@ -223,7 +223,7 @@
 
 
 			// 상세주소 리스트 얻어와서 리스트에 넣기
-			if(search_next == 0) ui.addr3selector.find('table tbody').empty(); // 더보기가 아닐 경우 목록 비우기
+			if(search_next == 0) ui.addr3selector.find('tbody').empty(); // 더보기가 아닐 경우 목록 비우기
 			var url = settings.api_url+'?search_word='+input_addr[2]+'&search_addr1='+input_addr[0]+'&search_addr2='+input_addr[1]+'&next='+search_next;
 			$.ajax({
 				url : url,
@@ -233,6 +233,7 @@
 					if(res.result) {
 						var html = '';
 						
+						// 받은 주소리스트가 있을 경우
 						if(res.values.address.length) {
 							
 							$.each(res.values.address, function(i){
@@ -240,16 +241,21 @@
 								html += '<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button" class="sel_detail">선택</button></td></tr>';
 							});
 							
+							// 검색어 하이라이트
 							html = html.replace(new RegExp(input_addr[2], 'g'),'<strong>'+input_addr[2]+'</strong>');
-							ui.addr3selector.find('table tbody').append($(html));
-							ui.addr3selector.find('table tfoot p.nomore').hide();
-						} else if(search_next == 0){
-							ui.addr3selector.find('table tfoot p.nomore').show();
-						}
+							ui.addr3selector.find('tbody').append($(html));
+							
+							// 마지막 주소리스트였을 경우
+							if(res.values.next == -1) ui.addr3selector.find('.nomore:visible, .islast:hidden, .more_search:visible').toggle();
+							// 보여줄 주소가 남았을 경우
+							else ui.addr3selector.find('.nomore:visible, .islast:visible, .more_search:hidden').toggle();
 						
+						} 
+						// 검색결과가 전혀 없을 경우
+						else if(search_next == 0) {
+							ui.addr3selector.find('.nomore:hidden, .islast:visible, .more_search:visible').toggle();
+						}
 						search_next = res.values.next;
-						if(search_next == -1 ) ui.addr3selector.find('table tfoot button.more_search').hide();
-						else ui.addr3selector.find('table tfoot button.more_search').show();
 					}
 				}
 			});
@@ -290,8 +296,9 @@
 			// element 정리
 			setUI();
 		}
-		
-		goStep0();
+		input_addr = ['대전광역시', '중구', ''];
+		goStep3();
+		//goStep0();
 		return this;
 	}
 
