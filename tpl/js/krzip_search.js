@@ -130,14 +130,7 @@
 			step = STEP_INIT;
 			input_addr = ['','',''];
 			new_addr_first = new_addr_second = '';
-			// element 정리
-			ui.cancelButton.hide();
-			ui.delButton.show();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideUp();
+			setUI();
 		}
 		
 		var goStep1 = function() {
@@ -150,8 +143,8 @@
 			// 광역시도 리스트 얻어와서 리스트에 넣기
 			ui.addr1selector.find('ul').empty();
 			$.ajax({
-				url : settings.api_url+'?request=addr1',
-				dataType : 'jsonp',
+				url : settings.api_url, dataType : 'jsonp',
+				data: { request: "addr1" },
 				success : function(res)
 				{
 					if(res.result) {
@@ -159,11 +152,9 @@
 							ui.addr1selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
 						})
 					}
-
 				}
 			});
 
-			// element 정리
 			setUI();
 		}
 
@@ -179,8 +170,8 @@
 			// 시/군/구 리스트 얻어와서 리스트에 넣기
 			ui.addr2selector.find('ul').empty();
 			$.ajax({
-				url : settings.api_url+'?request=addr2&search_addr1='+input_addr[0],
-				dataType : 'jsonp',
+				url : settings.api_url, dataType : 'jsonp',
+				data: { request: "addr2", search_addr1: input_addr[0] },
 				success : function(res)
 				{
 					if(res.result) {
@@ -188,13 +179,10 @@
 							ui.addr2selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
 						})
 					}
-
 				}
 			});
 			
 			setIndicator();
-			
-			// element 정리
 			setUI();
 		}
 
@@ -207,8 +195,6 @@
 			// validate addr2
 			if (arguments.length) input_addr[1] = arguments[0];
 			setIndicator();
-
-			// element 정리
 			setUI();
 		}
 
@@ -221,13 +207,11 @@
 			if (arguments.length) input_addr[2] = arguments[0];
 			ui.addr3selector.find('p strong').text(input_addr[2]);
 
-
 			// 상세주소 리스트 얻어와서 리스트에 넣기
 			if(search_next == 0) ui.addr3selector.find('tbody').empty(); // 더보기가 아닐 경우 목록 비우기
-			var url = settings.api_url+'?search_word='+input_addr[2]+'&search_addr1='+input_addr[0]+'&search_addr2='+input_addr[1]+'&next='+search_next;
 			$.ajax({
-				url : url,
-				dataType : 'jsonp',
+				url : settings.api_url,	dataType : 'jsonp',
+				data: { search_word: input_addr[2], search_addr1: input_addr[0], search_addr2: input_addr[1], next: search_next },
 				success : function(res)
 				{
 					if(res.result) {
@@ -260,7 +244,6 @@
 				}
 			});
 			
-			// element 정리
 			setUI();
 		}
 
@@ -275,8 +258,6 @@
 			}
 			
 			setIndicator();
-			
-			// element 정리
 			setUI();
 		}
 		
@@ -287,19 +268,16 @@
 
 			// validate addr4
 			if (arguments.length) new_addr_second = arguments[0];
+			
 			setIndicator();
 			
 			// 새주소로 설정 변경
 			ui.addrFirst.val(new_addr_first);
 			ui.addrSecond.val(new_addr_second);
 			
-			// element 정리
 			setUI();
 		}
-		input_addr = ['대전광역시', '중구', ''];
-		goStep3();
-		//goStep0();
+		goStep0();
 		return this;
 	}
-
 })(jQuery);
