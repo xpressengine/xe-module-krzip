@@ -149,7 +149,7 @@
 				{
 					if(res.result) {
 						$.each(res.values, function(i){
-							ui.addr1selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
+							ui.addr1selector.find('ul').append($('<li><button class="btn" type="button">'+this+'</button> </li>'));
 						})
 					}
 				}
@@ -176,7 +176,7 @@
 				{
 					if(res.result) {
 						$.each(res.values, function(i){
-							ui.addr2selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
+							ui.addr2selector.find('ul').append($('<li><button class="btn" type="button">'+this+'</button> </li>'));
 						})
 					}
 				}
@@ -222,7 +222,7 @@
 							
 							$.each(res.values.address, function(i){
 								var bdname = this.bdname?' ('+this.bdname+')':'';
-								html += '<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button" class="sel_detail">선택</button></td></tr>';
+								html += '<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button" class="btn sel_detail">선택</button></td></tr>';
 							});
 							
 							// 검색어 하이라이트
