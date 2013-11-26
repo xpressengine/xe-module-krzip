@@ -1,6 +1,3 @@
-//TODO: 검색어 strong 처리, 더보기 대신 prev/next
-
-
 (function($) {
 	
 	const STEP_INIT = 0;
@@ -30,17 +27,17 @@
 		var step = 0;
 		
 		var ui = {
-			'indicator' : this.find('.addr_indicator.box'), // view box
-			'delButton' : this.find('.addr_indicator.box button.delete'),
-			'cancelButton' : this.find('.addr_indicator.box button.cancel'),
-			'currentAddress' : this.find('.current_address'), // show current
-			'addrSecond' : this.find('input.addr_second'), // current_address
-			'addrFirst' : this.find('input.addr_first'), // current_address
-			'addr1selector' : this.find('.addr1_selector.box'),
-			'addr2selector' : this.find('.addr2_selector.box'),
-			'addr3input' : this.find('.addr3_input.box'),
-			'addr3selector' : this.find('.addr3_selector.box'),
-			'addr4input' : this.find('.addr4_input.box')
+			'indicator' : $(this.find('.addr_indicator.box')), // view box
+			'currentAddress' : $(this.find('.current_address')), // show current
+			'addrFirst' : $(this.find('input.addr_first')), // current_address
+			'addrSecond' : $(this.find('input.addr_second')), // current_address
+			'delButton' : $(this.find('.addr_indicator.box button.delete')).data('status',[1,0,0,0,0,0,1]),
+			'cancelButton' : $(this.find('.addr_indicator.box button.cancel')).data('status',[0,1,1,1,1,1,0]),
+			'addr1selector' : $(this.find('.addr1_selector.box')).data('status',[0,1,0,0,0,0,0]),
+			'addr2selector' : $(this.find('.addr2_selector.box')).data('status',[0,0,1,0,0,0,0]),
+			'addr3input' : $(this.find('.addr3_input.box')).data('status',[0,0,0,1,1,0,0]),
+			'addr3selector' : $(this.find('.addr3_selector.box')).data('status',[0,0,0,0,1,0,0]),
+			'addr4input' : $(this.find('.addr4_input.box')).data('status',[0,0,0,0,0,1,0]),
 		}
 		var search_next = 0; // 상세주소리스트 offset
 
@@ -88,7 +85,7 @@
 		});
 		
 		// 상세주소(addr3)를 선택
-		ui.addr3selector.on('click', 'table button', 'click', function(){
+		ui.addr3selector.on('click', 'table button.sel_detail', 'click', function(){
 			goStep5($(this).parents('tr').find('td:first span').text(),$(this).parents('tr').find('td:eq(1)').text());
 			return false;
 		});
@@ -116,6 +113,16 @@
 			// currentAddress 셋팅
 			if(new_addr_first) ui.currentAddress.val(new_addr_first + new_addr_second);
 			else ui.currentAddress.val(input_addr.join(' '));
+		};
+		
+		var setUI = function() {
+			
+			for(var id in ui) {
+				if(ui[id].data('status') == undefined) continue;
+				if(ui[id].data('status')[step]) ui[id].show();
+				else ui[id].hide();
+			}
+			
 		}
 
 		var goStep0 = function() {
@@ -123,14 +130,7 @@
 			step = STEP_INIT;
 			input_addr = ['','',''];
 			new_addr_first = new_addr_second = '';
-			// element 정리
-			ui.cancelButton.hide();
-			ui.delButton.show();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideUp();
+			setUI();
 		}
 		
 		var goStep1 = function() {
@@ -143,27 +143,19 @@
 			// 광역시도 리스트 얻어와서 리스트에 넣기
 			ui.addr1selector.find('ul').empty();
 			$.ajax({
-				url : settings.api_url+'?request=addr1',
-				dataType : 'jsonp',
+				url : settings.api_url, dataType : 'jsonp',
+				data: { request: "addr1" },
 				success : function(res)
 				{
 					if(res.result) {
 						$.each(res.values, function(i){
-							ui.addr1selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
+							ui.addr1selector.find('ul').append($('<li><button class="btn" type="button">'+this+'</button> </li>'));
 						})
 					}
-
 				}
 			});
 
-			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideDown();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideUp();
+			setUI();
 		}
 
 		var goStep2 = function() {
@@ -178,29 +170,20 @@
 			// 시/군/구 리스트 얻어와서 리스트에 넣기
 			ui.addr2selector.find('ul').empty();
 			$.ajax({
-				url : settings.api_url+'?request=addr2&search_addr1='+input_addr[0],
-				dataType : 'jsonp',
+				url : settings.api_url, dataType : 'jsonp',
+				data: { request: "addr2", search_addr1: input_addr[0] },
 				success : function(res)
 				{
 					if(res.result) {
 						$.each(res.values, function(i){
-							ui.addr2selector.find('ul').append($('<li><button type="button">'+this+'</button> </li>'));
+							ui.addr2selector.find('ul').append($('<li><button class="btn" type="button">'+this+'</button> </li>'));
 						})
 					}
-
 				}
 			});
 			
 			setIndicator();
-			
-			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideDown();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.hide();
+			setUI();
 		}
 
 		var goStep3 = function() {
@@ -212,15 +195,7 @@
 			// validate addr2
 			if (arguments.length) input_addr[1] = arguments[0];
 			setIndicator();
-
-			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideDown();
-			ui.addr3selector.slideUp();
-			ui.addr4input.hide();
+			setUI();
 		}
 
 		var goStep4 = function() {
@@ -230,40 +205,46 @@
 
 			// validate addr3
 			if (arguments.length) input_addr[2] = arguments[0];
-			ui.addr3selector.find('p span').text(input_addr[2]);
-
+			ui.addr3selector.find('p strong').text(input_addr[2]);
 
 			// 상세주소 리스트 얻어와서 리스트에 넣기
-			ui.addr3selector.find('table tbody').empty(); // 더보기가 아닐 경우 목록 비우기
-			var url = settings.api_url+'?search_word='+input_addr[2]+'&search_addr1='+input_addr[0]+'&search_addr2='+input_addr[1]+'&next='+search_next;
+			if(search_next == 0) ui.addr3selector.find('tbody').empty(); // 더보기가 아닐 경우 목록 비우기
 			$.ajax({
-				url : url,
-				dataType : 'jsonp',
+				url : settings.api_url,	dataType : 'jsonp',
+				data: { search_word: input_addr[2], search_addr1: input_addr[0], search_addr2: input_addr[1], next: search_next },
 				success : function(res)
 				{
 					if(res.result) {
-						$.each(res.values.address, function(i){
-							var bdname = this.bdname?' ('+this.bdname+')':'';
-							ui.addr3selector.find('table tbody').append($('<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button">선택</button></td></tr>'));
-						});
+						var html = '';
+						
+						// 받은 주소리스트가 있을 경우
+						if(res.values.address.length) {
+							
+							$.each(res.values.address, function(i){
+								var bdname = this.bdname?' ('+this.bdname+')':'';
+								html += '<tr><td>[도로명] <span class="addr_list">'+this.addr1+' '+this.addr2_new + bdname +'</span><br/>[지번] ' + this.addr1+' '+this.addr2_old+'</td><td>'+this.zipcode+'</td><td><button type="button" class="btn sel_detail">선택</button></td></tr>';
+							});
+							
+							// 검색어 하이라이트
+							html = html.replace(new RegExp(input_addr[2], 'g'),'<strong>'+input_addr[2]+'</strong>');
+							ui.addr3selector.find('tbody').append($(html));
+							
+							// 마지막 주소리스트였을 경우
+							if(res.values.next == -1) ui.addr3selector.find('.nomore:visible, .islast:hidden, .more_search:visible').toggle();
+							// 보여줄 주소가 남았을 경우
+							else ui.addr3selector.find('.nomore:visible, .islast:visible, .more_search:hidden').toggle();
+						
+						} 
+						// 검색결과가 전혀 없을 경우
+						else if(search_next == 0) {
+							ui.addr3selector.find('.nomore:hidden, .islast:visible, .more_search:visible').toggle();
+						}
 						search_next = res.values.next;
-
-						// 더보기 감추기
-						if(search_next == -1) ui.addr3selector.find('table tfoot').hide();
-						else ui.addr3selector.find('table tfoot').show();
 					}
-
 				}
 			});
 			
-			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideDown();
-			ui.addr3selector.slideDown();
-			ui.addr4input.hide();
+			setUI();
 		}
 
 		var goStep5 = function() {
@@ -277,15 +258,7 @@
 			}
 			
 			setIndicator();
-			
-			// element 정리
-			ui.cancelButton.show();
-			ui.delButton.hide();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideDown();
+			setUI();
 		}
 		
 		var goStep6 = function() {
@@ -295,26 +268,16 @@
 
 			// validate addr4
 			if (arguments.length) new_addr_second = arguments[0];
+			
 			setIndicator();
 			
 			// 새주소로 설정 변경
 			ui.addrFirst.val(new_addr_first);
 			ui.addrSecond.val(new_addr_second);
 			
-			// element 정리
-			ui.cancelButton.hide();
-			ui.delButton.show();
-			ui.indicator.slideDown();
-			ui.addr1selector.slideUp();
-			ui.addr2selector.slideUp();
-			ui.addr3input.slideUp();
-			ui.addr3selector.slideUp();
-			ui.addr4input.slideUp();
+			setUI();
 		}
-		
 		goStep0();
-
 		return this;
 	}
-
 })(jQuery);
