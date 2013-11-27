@@ -41,7 +41,10 @@
         	$config = $oModuleModel->getModuleConfig('krzip');
         	if($config->krzip_server_hostname == 'kr.zip.zeroboard.com')
         	{
-        		$config->krzip_server_hostname = 'kr.zip.xpressengine.com';
+        		$config->krzip_server_hostname = $this->hostname;
+        		$config->krzip_server_port = $this->port;
+        		$config->krzip_server_query = $this->query;
+        		
         		// Insert by creating the module Controller object
         		$oModuleController = &getController('module');
         		$output = $oModuleController->insertModuleConfig('krzip',$config);
