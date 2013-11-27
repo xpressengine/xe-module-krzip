@@ -36,6 +36,9 @@
 		<value xml:lang="tr"><![CDATA[Posta kodu kontrolü için olan sunucu portu]]></value>
 		<value xml:lang="vi"><![CDATA[Cổng Server kiểm tra Zip Code]]></value>
 	</item>
+	<item name="krzip_server_query">
+		<value xml:lang="ko"><![CDATA[우편번호 검사 서버 경로]]></value>
+	</item>
 	<item name="zipcode">
 		<value xml:lang="ko"><![CDATA[우편번호]]></value>
 	</item>
@@ -104,6 +107,9 @@
 		<value xml:lang="es"><![CDATA[No se puede conectar al servidor de chequeo de código postal]]></value>
 		<value xml:lang="tr"><![CDATA[Posta kodu kontrol sunucusuna bağlanılamıyor]]></value>
 		<value xml:lang="vi"><![CDATA[Không thể kết nối tới Server.]]></value>
+	</item>
+	<item name="msg_nomore_address">
+		<value xml:lang="ko"><![CDATA[검색어와 일치하는 주소가 없습니다.]]></value>
 	</item>
 	<item name="cmd_kr_address_detail">
 		<value xml:lang="ko"><![CDATA[상세주소를 입력하세요.]]></value>

@@ -1,6 +1,6 @@
 <load target="css/krzip.css" />
-        	
-        	<div class="krZip">
+			
+			<div class="krZip">
 				<input type="hidden" class="addr_first" name="{$krzip->column_name}[]" value="{$krzip->values[0]}" />
 				<input type="hidden" class="addr_second" name="{$krzip->column_name}[]" value="{$krzip->values[1]}" />
 				
@@ -49,7 +49,7 @@
 							</table>
 						</div>
 						<div class="scroll_foot">
-							<p class="nomore" style="display:none;">검색어와 일치하는 주소가 없습니다.</p>
+							<p class="nomore" style="display:none;">{$lang->msg_nomore_address}</p>
 							<p class="islast" style="display:none;"> </p>
 							<button type="button" class="btn more_search">{$lang->more}</button>
 						</div>
