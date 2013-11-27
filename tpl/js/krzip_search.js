@@ -86,7 +86,7 @@
 		
 		// 상세주소(addr3)를 선택
 		ui.addr3selector.on('click', 'table button.sel_detail', 'click', function(){
-			goStep5($(this).parents('tr').find('td:first span').text(),$(this).parents('tr').find('td:eq(1)').text());
+			goStep5($(this).closest('tr').find('td:first span').text(),$(this).closest('tr').find('td:eq(1)').text());
 			return false;
 		});
 		
