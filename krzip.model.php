@@ -28,7 +28,7 @@
 			if($config->krzip_server_query) $this->query = $config->krzip_server_query;
 
 			$krzip = new stdClass();
-			$krzip->api_url = 'http://'.$this->hostname.($this->port?':'.$this->port:'').$this->query;
+			$krzip->api_url = '//'.$this->hostname.($this->port?':'.$this->port:'').$this->query;
 			$krzip->column_name = $column_name;
 			$krzip->values = $values;
 			
