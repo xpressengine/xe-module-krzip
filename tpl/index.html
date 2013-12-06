@@ -26,17 +26,7 @@
 		</div>
 	
 		<div class="x_control-group">
-			<label class="x_control-label" for="port">{$lang->krzip_server_port}</label>
-			<div class="x_controls">
-				<label class="x_inline">
-					<input id="port" type="number" min="0" name="krzip_server_port" value="{htmlspecialchars($config->krzip_server_port?$config->krzip_server_port:'80')}" class="inputTypeText w400"/> 
-					<p class="x_help-block">{$lang->about_krzip_server_port}</p>
-				</label>
-			</div>
-		</div>
-	
-		<div class="x_control-group">
-			<label class="x_control-label" for="port">{$lang->krzip_server_query}</label>
+			<label class="x_control-label" for="query">{$lang->krzip_server_query}</label>
 			<div class="x_controls">
 				<label class="x_inline">
 					<input id="query" type="text" name="krzip_server_query" value="{htmlspecialchars($config->krzip_server_query?$config->krzip_server_query:'/server.php?addr3=')}" class="inputTypeText w400"/> 

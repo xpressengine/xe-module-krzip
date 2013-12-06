@@ -24,11 +24,10 @@
 			$oModuleModel = &getModel('module');
 			$config = $oModuleModel->getModuleConfig('krzip');
 			if($config->krzip_server_hostname) $this->hostname = $config->krzip_server_hostname;
-			if($config->krzip_server_port) $this->port = $config->krzip_server_port;
 			if($config->krzip_server_query) $this->query = $config->krzip_server_query;
 
 			$krzip = new stdClass();
-			$krzip->api_url = '//'.$this->hostname.($this->port?':'.$this->port:'').$this->query;
+			$krzip->api_url = '//'.$this->hostname.$this->query;
 			$krzip->column_name = $column_name;
 			$krzip->values = $values;
 			
@@ -50,7 +49,6 @@
 			$oModuleModel = &getModel('module');
 			$config = $oModuleModel->getModuleConfig('krzip');
 			if($config->krzip_server_hostname) $this->hostname = $config->krzip_server_hostname;
-			if($config->krzip_server_port) $this->port = $config->krzip_server_port;
 			if($config->krzip_server_query) $this->query = $config->krzip_server_query;
 			// Get address(town)
 			$addr = trim(Context::get('addr'));
@@ -58,7 +56,7 @@
 			// Attempt to request to the server
 			$query_string = $this->query.urlencode($addr);
 
-			$fp = @fsockopen($this->hostname, $this->port, $errno, $errstr);
+			$fp = @fsockopen($this->hostname, 80, $errno, $errstr);
 			if(!$fp) return new Object(-1, 'msg_fail_to_socket_open');
 
 			fputs($fp, "GET {$query_string} HTTP/1.0\r\n");

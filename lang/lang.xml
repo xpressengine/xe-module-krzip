@@ -24,18 +24,6 @@
 		<value xml:lang="tr"><![CDATA[Posta kodu kontrolü için olan sunucu ismi]]></value>
 		<value xml:lang="vi"><![CDATA[Tên Server kiểm tra Zip Code]]></value>
 	</item>
-	<item name="krzip_server_port">
-		<value xml:lang="ko"><![CDATA[우편번호 검사 서버 포트]]></value>
-		<value xml:lang="en"><![CDATA[Server port for zip code checking]]></value>
-		<value xml:lang="jp"><![CDATA[郵便番号検索サーバのポート]]></value>
-		<value xml:lang="zh-CN"><![CDATA[邮编检测服务器端口]]></value>
-		<value xml:lang="zh-TW"><![CDATA[郵編檢測主機端口]]></value>
-		<value xml:lang="fr"><![CDATA[Port de serveur pour vérifier le code postal]]></value>
-		<value xml:lang="ru"><![CDATA[Порт сервера для проверки почтового индекса]]></value>
-		<value xml:lang="es"><![CDATA[Puero del servidor para el chequeo de código postal]]></value>
-		<value xml:lang="tr"><![CDATA[Posta kodu kontrolü için olan sunucu portu]]></value>
-		<value xml:lang="vi"><![CDATA[Cổng Server kiểm tra Zip Code]]></value>
-	</item>
 	<item name="krzip_server_query">
 		<value xml:lang="ko"><![CDATA[우편번호 검사 서버 경로]]></value>
 	</item>
@@ -56,18 +44,6 @@
 		<value xml:lang="es"><![CDATA[Ingresar el dominio del servidor para chequear el código postal y recibir la lista de resultado]]></value>
 		<value xml:lang="tr"><![CDATA[Lütfen posta kodu kontrolü ve alınan sonuç listesi için sunucu alan adını giriniz]]></value>
 		<value xml:lang="vi"><![CDATA[Xin hãy nhập tên miền của Server để kiểm tra và kết nối cho danh sách kết quả]]></value>
-	</item>
-	<item name="about_krzip_server_port">
-		<value xml:lang="ko"><![CDATA[우편번호를 검사서버의 포트 번호를 입력해주세요.]]></value>
-		<value xml:lang="en"><![CDATA[Please input the server's port number for checking the zip code]]></value>
-		<value xml:lang="jp"><![CDATA[郵便番号検索サーバのポート番号を入力して下さい。]]></value>
-		<value xml:lang="zh-CN"><![CDATA[请输入邮编检测服务器端口。]]></value>
-		<value xml:lang="zh-TW"><![CDATA[請輸入郵編檢測主機端口。]]></value>
-		<value xml:lang="fr"><![CDATA[Entrez le numéro de port de serveur pour vérifier le code postal, SVP]]></value>
-		<value xml:lang="ru"><![CDATA[Пожалуйста, введите порт сервера для проверки почтового идекса]]></value>
-		<value xml:lang="es"><![CDATA[Ingresar el número del puerto del servidor para chequear el código postal]]></value>
-		<value xml:lang="tr"><![CDATA[Lütfen posta kodu kontrolü için sunucu portunu giriniz]]></value>
-		<value xml:lang="vi"><![CDATA[Xin hãy nhập số cổng kết nối của Server để kiểm tra Zip Code]]></value>
 	</item>
 	<item name="about_krzip_server_query">
 		<value xml:lang="ko"><![CDATA[우편번호를 검사서버에 요청할 query url을 입력해 주세요.]]></value>

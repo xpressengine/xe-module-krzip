@@ -10,7 +10,6 @@
 	class krzip extends ModuleObject {
 
 		var $hostname = 'kr.zip.xpressengine.com';
-		var $port = 80;
 		var $query = '/server.php';
 		
 		/**
@@ -42,7 +41,6 @@
 			if($config->krzip_server_hostname == 'kr.zip.zeroboard.com')
 			{
 				$config->krzip_server_hostname = $this->hostname;
-				$config->krzip_server_port = $this->port;
 				$config->krzip_server_query = $this->query;
 				
 				// Insert by creating the module Controller object
