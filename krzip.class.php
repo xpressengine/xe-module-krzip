@@ -9,7 +9,7 @@
 
 	class krzip extends ModuleObject {
 
-		var $hostname = 'kr.zip.xpressengine.com';
+		var $hostname = 'krzip.xpressengine.com';
 		var $query = '/server.php';
 		
 		/**
