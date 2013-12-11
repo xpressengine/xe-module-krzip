@@ -175,9 +175,14 @@
 				success : function(res)
 				{
 					if(res.result) {
-						$.each(res.values, function(i){
-							ui.addr2selector.find('ul').append($('<li><button class="btn" type="button">'+this+'</button> </li>'));
-						})
+						// 세종시는 시/군/구 구분이 없음
+						if(res.values.length == 1 && res.values[0] == "") {
+							goStep3('');
+						} else {
+							$.each(res.values, function(i){
+								ui.addr2selector.find('ul').append($('<li><button class="btn" type="button">'+this+'</button> </li>'));
+							});
+						}
 					}
 				}
 			});
