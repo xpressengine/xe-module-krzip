@@ -1,12 +1,12 @@
 (function($) {
 	
-	const STEP_INIT = 0;
-	const STEP_SELECT_ADDR1 = 1;
-	const STEP_SELECT_ADDR2 = 2;
-	const STEP_INPUT_ADDR3 = 3;
-	const STEP_SELECT_ADDR3 = 4;
-	const STEP_INPUT_ADDR4 = 5;
-	const STEP_COMPLETE = 6;
+	var STEP_INIT = 0;
+	var STEP_SELECT_ADDR1 = 1;
+	var STEP_SELECT_ADDR2 = 2;
+	var STEP_INPUT_ADDR3 = 3;
+	var STEP_SELECT_ADDR3 = 4;
+	var STEP_INPUT_ADDR4 = 5;
+	var STEP_COMPLETE = 6;
 	
 	$.fn.krZip = function(options) {
 		
@@ -37,8 +37,9 @@
 			'addr2selector' : $(this.find('.addr2_selector.box')).data('status',[0,0,1,0,0,0,0]),
 			'addr3input' : $(this.find('.addr3_input.box')).data('status',[0,0,0,1,1,0,0]),
 			'addr3selector' : $(this.find('.addr3_selector.box')).data('status',[0,0,0,0,1,0,0]),
-			'addr4input' : $(this.find('.addr4_input.box')).data('status',[0,0,0,0,0,1,0]),
-		}
+			'addr4input' : $(this.find('.addr4_input.box')).data('status',[0,0,0,0,0,1,0])
+		};
+		
 		var search_next = 0; // 상세주소리스트 offset
 
 		// 주소창 클릭
@@ -51,13 +52,13 @@
 			ui.addrFirst.val('');
 			ui.addrSecond.val('');
 			ui.currentAddress.val('');
-		})
+		});
 		
 		// 취소버튼 클릭
 		ui.cancelButton.click(function(){
 			ui.currentAddress.val(ui.addrFirst.val() + ' ' + ui.addrSecond.val());
 			goStep0();
-		})
+		});
 
 		// 광역시도 주소(addr1)를 선택
 		ui.addr1selector.on('click','button',function() {
@@ -123,7 +124,7 @@
 				else ui[id].hide();
 			}
 			
-		}
+		};
 
 		var goStep0 = function() {
 			// step 초기화
@@ -131,7 +132,7 @@
 			input_addr = ['','',''];
 			new_addr_first = new_addr_second = '';
 			setUI();
-		}
+		};
 		
 		var goStep1 = function() {
 
@@ -156,7 +157,7 @@
 			});
 
 			setUI();
-		}
+		};
 
 		var goStep2 = function() {
 
@@ -189,7 +190,7 @@
 			
 			setIndicator();
 			setUI();
-		}
+		};
 
 		var goStep3 = function() {
 
@@ -201,7 +202,7 @@
 			if (arguments.length) input_addr[1] = arguments[0];
 			setIndicator();
 			setUI();
-		}
+		};
 
 		var goStep4 = function() {
 
@@ -250,7 +251,7 @@
 			});
 			
 			setUI();
-		}
+		};
 
 		var goStep5 = function() {
 			
@@ -264,7 +265,7 @@
 			
 			setIndicator();
 			setUI();
-		}
+		};
 		
 		var goStep6 = function() {
 			
@@ -281,7 +282,8 @@
 			ui.addrSecond.val(new_addr_second);
 			
 			setUI();
-		}
+		};
+		
 		goStep0();
 		return this;
 	}
