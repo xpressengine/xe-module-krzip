@@ -24,7 +24,7 @@
 			if(!$args->krzip_server_hostname) $args->krzip_server_hostname = $this->hostname;
 			if(!$args->krzip_server_query) $args->krzip_server_query = $this->query;
 			// Insert by creating the module Controller object
-			$oModuleController = &getController('module');
+			$oModuleController = getController('module');
 			$output = $oModuleController->insertModuleConfig('krzip',$args);
 
 			if(!$output->toBool()) return $output;

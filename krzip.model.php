@@ -21,7 +21,7 @@
 		 **/
 		function getKrzipCodeSearchHtml($column_name, $values) {
 			
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$config = $oModuleModel->getModuleConfig('krzip');
 			if($config->krzip_server_hostname) $this->hostname = $config->krzip_server_hostname;
 			if($config->krzip_server_query) $this->query = $config->krzip_server_query;
@@ -46,7 +46,7 @@
 		 **/
 		function getKrzipCodeList() {
 			// Get configurations (using module model object)
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$config = $oModuleModel->getModuleConfig('krzip');
 			if($config->krzip_server_hostname) $this->hostname = $config->krzip_server_hostname;
 			if($config->krzip_server_query) $this->query = $config->krzip_server_query;

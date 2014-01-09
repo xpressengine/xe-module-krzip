@@ -24,7 +24,7 @@
 		 **/
 		function checkUpdate() {
 			
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$config = $oModuleModel->getModuleConfig('krzip');
 			if($config->krzip_server_hostname == 'kr.zip.zeroboard.com') return true;
 			
@@ -36,7 +36,7 @@
 		 **/
 		function moduleUpdate() {
 			
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$config = $oModuleModel->getModuleConfig('krzip');
 			if($config->krzip_server_hostname == 'kr.zip.zeroboard.com')
 			{
@@ -44,7 +44,7 @@
 				$config->krzip_server_query = $this->query;
 				
 				// Insert by creating the module Controller object
-				$oModuleController = &getController('module');
+				$oModuleController = getController('module');
 				$output = $oModuleController->insertModuleConfig('krzip',$config);
 			}
 			

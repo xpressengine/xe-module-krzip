@@ -20,7 +20,7 @@
 		 **/
 		function dispKrzipAdminConfig() {
 			// Get configurations (using module model object)
-			$oModuleModel = &getModel('module');
+			$oModuleModel = getModel('module');
 			$config = $oModuleModel->getModuleConfig('krzip');
 			Context::set('config',$config);
 			// Set a template file
