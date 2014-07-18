@@ -120,7 +120,7 @@
 			
 			for(var id in ui) {
 				if(ui[id].data('status') == undefined) continue;
-				if(ui[id].data('status')[step]) ui[id].show();
+				if(ui[id].data('status')[step]) ui[id].show().find('input').focus();
 				else ui[id].hide();
 			}
 			
