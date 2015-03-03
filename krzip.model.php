@@ -86,7 +86,6 @@ class krzipModel extends krzip
 
 	/**
 	 * @brief 외부 서버로부터 주소 검색 결과 반환
-	 * @param integer $api_handler
 	 * @param string $query
 	 * @return mixed
 	 */
