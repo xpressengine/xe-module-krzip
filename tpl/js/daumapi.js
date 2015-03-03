@@ -53,11 +53,11 @@
 
 				/* 도로명 주소 저장 */
 				var roadAddr = (response.userSelectedType === "R" ? fullAddr : response.roadAddress);
-				ui.roadAddress.val(roadAddr).prop("disabled", !!roadAddr).trigger("change");
+				ui.roadAddress.val(roadAddr).trigger("change");
 
 				/* 지번 주소 저장 */
 				var jibunAddr = (response.userSelectedType === "R" ? response.jibunAddress : fullAddr);
-				ui.jibunAddress.val(jibunAddr ? "(" + jibunAddr + ")" : jibunAddr).prop("disabled", !!jibunAddr).trigger("change");
+				ui.jibunAddress.val(jibunAddr ? "(" + jibunAddr + ")" : jibunAddr).trigger("change");
 
 				/* 부가 주소 저장 */
 				ui.extraAddress.val(extraAddr).trigger("change");
@@ -93,13 +93,9 @@
 		}
 
 		/* 검색 이벤트 등록 */
-		key = ["postcode", "roadAddress", "jibunAddress", "extraAddress", "search"];
-		for(i = 0; i < key.length; i++) {
-			val = key[i];
-			ui[val].on("click", function (e) {
-				krzip.open();
-			});
-		}
+		ui.search.on("click", function (e) {
+			krzip.open();
+		});
 	};
 })(jQuery);
 

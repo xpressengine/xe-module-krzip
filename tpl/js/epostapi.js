@@ -46,14 +46,10 @@
 			}
 
 			/* 검색 이벤트 등록 */
-			key = ["postcode", "roadAddress", "jibunAddress", "extraAddress", "search"];
-			for(i = 0; i < key.length; i++) {
-				val = key[i];
-				ui[val].on("click", function (e) {
-					var query = krzip.query;
-					krzip.open(query);
-				});
-			}
+			ui.search.on("click", function (e) {
+				var query = krzip.query;
+				krzip.open(query);
+			});
 		}
 		else if(order === "query" && data) {
 			krzip.query = data.query;
