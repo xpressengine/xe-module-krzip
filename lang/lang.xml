@@ -34,7 +34,7 @@
 		<value xml:lang="ko"><![CDATA[우편번호 검색을 어떤 API를 통해 할 것인지 결정합니다.]]></value>
 	</item>
 	<item name="about_krzip_epostapi_regkey">
-		<value xml:lang="ko"><![CDATA[우체국 우편번호 API를 이용하기 위해 인터넷 우체국에서 받급 받은 등록키를 입력합니다.]]></value>
+		<value xml:lang="ko"><![CDATA[우체국 우편번호 API를 이용하기 위해 인터넷 우체국에서 발급 받은 등록키를 입력합니다.]]></value>
 	</item>
 	<item name="msg_krzip_road_address_expectation">
 		<value xml:lang="ko"><![CDATA[예상 도로명 주소: %s]]></value>
