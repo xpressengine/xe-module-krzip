@@ -53,11 +53,11 @@
 
 				/* 도로명 주소 저장 */
 				var roadAddr = (response.userSelectedType === "R" ? fullAddr : response.roadAddress);
-				ui.roadAddress.val(roadAddr).trigger("change");
+				ui.roadAddress.prop("disabled", !!roadAddr).val(roadAddr).trigger("change");
 
 				/* 지번 주소 저장 */
 				var jibunAddr = (response.userSelectedType === "R" ? response.jibunAddress : fullAddr);
-				ui.jibunAddress.val(jibunAddr ? "(" + jibunAddr + ")" : jibunAddr).trigger("change");
+				ui.jibunAddress.prop("disabled", !!jibunAddr).val(jibunAddr ? "(" + jibunAddr + ")" : jibunAddr).trigger("change");
 
 				/* 부가 주소 저장 */
 				ui.extraAddress.val(extraAddr).trigger("change");
