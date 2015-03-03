@@ -1,0 +1,16 @@
+<!--// 우체국 우편번호 API -->
+<!--// HEADER -->
+<load target="./js/epostapi.search.js" />
+
+<div class="krZip" id="krzip-{$template_config->sequence_id}">
+	<input type="text" class="krzip-input" />
+	<input type="button" class="krzip-search" />
+	<ul class="krzip-addressList">
+	</ul>
+</div>
+
+<script>
+//<![CDATA[
+jQuery("#krzip-{$template_config->sequence_id}").Krzip();
+//]]>
+</script>
