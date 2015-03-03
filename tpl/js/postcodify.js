@@ -24,13 +24,15 @@
 			guide         : $this.find(".krzip-guide")
 		};
 
-		values.postcode.addClass("postcodify_postcode6");
+		var postcode_format = $this.data("postcode-format") == "5" ? "5" : "6";
+
+		values.postcode.addClass("postcodify_postcode" + postcode_format);
 		values.roadAddress.addClass("postcodify_address");
 		values.jibunAddress.addClass("postcodify_jibeon_address");
 		values.detailAddress.addClass("postcodify_details");
 		values.extraAddress.addClass("postcodify_extra_info");
 
-		ui.postcode.addClass("postcodify_postcode6");
+		ui.postcode.addClass("postcodify_postcode" + postcode_format);
 		ui.roadAddress.addClass("postcodify_address");
 		ui.jibunAddress.addClass("postcodify_jibeon_address");
 		ui.detailAddress.addClass("postcodify_details");
@@ -40,7 +42,7 @@
 			inputParent : $this,
 			useFullJibeon : false,
 			requireExactQuery : false,
-			forceDisplayPostcode5 : false,
+			forceDisplayPostcode5 : (postcode_format == "5") ? true : false,
 			onSelect : function () {
 				var jibun = ui.jibunAddress.val();
 				if(jibun) {
