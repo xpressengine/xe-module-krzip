@@ -128,7 +128,7 @@ class krzipModel extends krzip
 		 * @brief 문자열 인코딩 변환
 		 * @note 우체국 우편번호 API는 검색어를 EUC-KR로 넘겨주어야 함
 		 */
-		$encoding = mb_detect_encoding($query);
+		$encoding = strtoupper(mb_detect_encoding($query));
 		if($encoding !== 'EUC-KR')
 		{
 			$query = iconv($encoding, 'EUC-KR', $query);
