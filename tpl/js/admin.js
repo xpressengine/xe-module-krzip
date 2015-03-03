@@ -1,8 +1,11 @@
 /* Copyright (C) NAVER <http://www.navercorp.com> */
 
-(function ($) {
-	"use strict";
-})(jQuery);
+jQuery(function ($) {
+	$("#api_handler").on("change", function (e) {
+		var prop = $(this).val() == 0;
+		$("#epostapi_regkey").prop("disabled", prop);
+	});
+});
 
 /* End of file admin.js */
 /* Location: ./modules/krzip/tpl/js/admin.js */

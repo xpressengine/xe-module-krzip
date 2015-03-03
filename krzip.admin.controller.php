@@ -18,7 +18,7 @@ class krzipAdminController extends krzip
 		unset($module_config->vid);
 
 		$oKrzipController = getController('krzip');
-		$output = $oKrzipController->insertConfig($module_config);
+		$output = $oKrzipController->updateConfig($module_config);
 		if(!$output->toBool())
 		{
 			return $output;

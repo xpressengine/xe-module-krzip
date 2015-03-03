@@ -61,7 +61,7 @@
 			ui.roadAddress.val(data[1]).trigger("change");
 			ui.jibunAddress.val(data[2]).trigger("change");
 			ui.extraAddress.val(data[4]).trigger("change");
-			ui.detailAddress.focus();
+			ui.detailAddress.trigger("focus");
 		}
 
 		/* 인스턴스 저장 */

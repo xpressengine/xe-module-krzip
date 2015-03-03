@@ -20,7 +20,7 @@ class krzip extends ModuleObject
 
 	public static $default_config = array('api_handler' => 0);
 
-	public static $api_list = array('daumapi', 'epostapi', 'xeapi');
+	public static $api_list = array('daumapi', 'epostapi');
 
 	public static $epostapi_host = 'http://biz.epost.go.kr/KpostPortal/openapi';
 

@@ -78,7 +78,7 @@
 				}
 
 				/* 상세 주소로 커서 이동 */
-				ui.detailAddress.focus();
+				ui.detailAddress.trigger("focus");
 			}
 		});
 

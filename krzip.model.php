@@ -61,14 +61,14 @@ class krzipModel extends krzip
 		}
 
 		/* 지번 주소 */
-		if(preg_match('/\(.+\s.+[읍면동리]\s[0-9-]+\)/', $output[1], $matches))
+		if(preg_match('/\(.+\s.+[읍면동리(마을)(0-9+가)]\s[0-9-]+\)/', $output[1], $matches))
 		{
 			$output[1] = trim(str_replace($matches[0], '', $output[1]));
 			$output[2] = $matches[0];
 		}
 
 		/* 부가 정보 */
-		if(preg_match('/\(.+[읍면동리](?:,.*)?\)/u', $output[1], $matches))
+		if(preg_match('/\(.+[읍면동리(마을)(0-9+가)](?:,.*)?\)/u', $output[1], $matches))
 		{
 			$output[1] = trim(str_replace($matches[0], '', $output[1]));
 			$output[4] = $matches[0];
@@ -165,21 +165,25 @@ class krzipModel extends krzip
 		$result = $oXmlParser->parse($buff);
 		if($result->error)
 		{
-			$err_code = intval(str_replace('ERR-', '', $result->error->error_code->body));
-			switch($err_code)
+			$err_msg = trim($result->error->message->body);
+			if(!$err_msg)
 			{
-				case 1:
-					$err_msg = 'msg_krzip_is_maintenance';
-					break;
-				case 2:
-					$err_msg = 'msg_krzip_wrong_regkey';
-					break;
-				case 3:
-					$err_msg = 'msg_krzip_no_result';
-					break;
-				default:
-					$err_msg = 'msg_krzip_riddling_wrong';
-					break;
+				$err_code = intval(str_replace('ERR-', '', $result->error->error_code->body));
+				switch($err_code)
+				{
+					case 1:
+						$err_msg = 'msg_krzip_is_maintenance';
+						break;
+					case 2:
+						$err_msg = 'msg_krzip_wrong_regkey';
+						break;
+					case 3:
+						$err_msg = 'msg_krzip_no_result';
+						break;
+					default:
+						$err_msg = 'msg_krzip_riddling_wrong';
+						break;
+				}
 			}
 
 			return new Object(-1, $err_msg);

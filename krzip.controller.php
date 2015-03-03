@@ -8,7 +8,7 @@
 
 class krzipController extends krzip
 {
-	function insertConfig($args)
+	function updateConfig($args)
 	{
 		if (!$args || !is_object($args))
 		{
@@ -16,7 +16,7 @@ class krzipController extends krzip
 		}
 
 		$oModuleController = getController('module');
-		$output = $oModuleController->insertModuleConfig('krzip', $args);
+		$output = $oModuleController->updateModuleConfig('krzip', $args);
 		if($output->toBool())
 		{
 			unset($this->module_config);

@@ -27,6 +27,7 @@
 					}
 				},
 				function (response) {
+					$this.data("address_list", "");
 					ui.addressList.html("");
 				}
 			);
