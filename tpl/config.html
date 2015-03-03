@@ -38,7 +38,7 @@
 			<div class="x_control-group">
 				<label class="x_control-label" for="epostapi_regkey">{$lang->cmd_krzip_regkey}</label>
 				<div class="x_controls">
-					<input type="text" name="epostapi_regkey" id="epostapi_regkey" value="{htmlspecialchars($module_config->epostapi_regkey, ENT_COMPAT | ENT_HTML401, 'UTF-8', FALSE)}" disabled="disabled"|cond="$module_config->api_handler == 0" />
+					<input type="text" name="epostapi_regkey" id="epostapi_regkey" value="{htmlspecialchars($module_config->epostapi_regkey, ENT_COMPAT | ENT_HTML401, 'UTF-8', FALSE)}" disabled="disabled"|cond="$module_config->api_handler != 1" />
 					<a href="#about_epostapi_regkey" class="x_icon-question-sign" data-toggle="#about_epostapi_regkey">{$lang->help}</a>
 					<p id="about_epostapi_regkey" class="x_help-block" hidden="hidden">{$lang->about_krzip_epostapi_regkey}</p>
 				</div>

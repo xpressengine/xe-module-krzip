@@ -23,33 +23,32 @@
 			search        : $this.find(".krzip-search"),
 			guide         : $this.find(".krzip-guide")
 		};
-		
+
 		values.postcode.addClass("postcodify_postcode6");
 		values.roadAddress.addClass("postcodify_address");
 		values.jibunAddress.addClass("postcodify_jibeon_address");
 		values.detailAddress.addClass("postcodify_details");
 		values.extraAddress.addClass("postcodify_extra_info");
-		
+
 		ui.postcode.addClass("postcodify_postcode6");
 		ui.roadAddress.addClass("postcodify_address");
 		ui.jibunAddress.addClass("postcodify_jibeon_address");
 		ui.detailAddress.addClass("postcodify_details");
 		ui.extraAddress.addClass("postcodify_extra_info");
-		
+
 		ui.search.postcodifyPopUp({
 			inputParent : $this,
 			useFullJibeon : false,
 			requireExactQuery : false,
 			forceDisplayPostcode5 : false,
-			onSelect : function() {
+			onSelect : function () {
 				var jibun = ui.jibunAddress.val();
-				if (jibun) {
+				if(jibun) {
 					values.jibunAddress.val("(" + jibun + ")");
 					ui.jibunAddress.val("(" + jibun + ")");
 				}
 			}
 		});
-
 	};
 })(jQuery);
 

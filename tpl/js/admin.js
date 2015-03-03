@@ -2,7 +2,7 @@
 
 jQuery(function ($) {
 	$("#api_handler").on("change", function (e) {
-		var prop = $(this).val() == 0;
+		var prop = $(this).val() != 1;
 		$("#epostapi_regkey").prop("disabled", prop);
 	});
 });
