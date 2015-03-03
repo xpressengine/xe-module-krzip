@@ -6,7 +6,7 @@
  * @brief  Krzip module high class.
  */
 
-if (!function_exists('lcfirst'))
+if(!function_exists('lcfirst'))
 {
 	function lcfirst($text)
 	{

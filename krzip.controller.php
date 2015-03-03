@@ -10,7 +10,7 @@ class krzipController extends krzip
 {
 	function updateConfig($args)
 	{
-		if (!$args || !is_object($args))
+		if(!$args || !is_object($args))
 		{
 			$args = new stdClass();
 		}
