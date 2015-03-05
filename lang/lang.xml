@@ -12,9 +12,6 @@
 	<item name="cmd_krzip_epostapi">
 		<value xml:lang="ko"><![CDATA[우체국 우편번호]]></value>
 	</item>
-	<item name="cmd_krzip_postcodify">
-		<value xml:lang="ko"><![CDATA[Postcodify]]></value>
-	</item>
 	<item name="cmd_krzip_regkey">
 		<value xml:lang="ko"><![CDATA[등록키]]></value>
 	</item>
