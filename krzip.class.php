@@ -36,7 +36,7 @@ class krzip extends ModuleObject
 
 	function checkUpdate()
 	{
-		return false;
+		return FALSE;
 	}
 
 	function moduleUpdate()
