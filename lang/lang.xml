@@ -12,6 +12,15 @@
 	<item name="cmd_krzip_epostapi">
 		<value xml:lang="ko"><![CDATA[우체국 우편번호]]></value>
 	</item>
+	<item name="cmd_postcode_format">
+		<value xml:lang="ko"><![CDATA[우편번호 입력 형식]]></value>
+	</item>
+	<item name="cmd_postcode_format_6">
+		<value xml:lang="ko"><![CDATA[기존 우편번호 (6자리)]]></value>
+	</item>
+	<item name="cmd_postcode_format_5">
+		<value xml:lang="ko"><![CDATA[새 우편번호 (5자리)]]></value>
+	</item>
 	<item name="cmd_krzip_regkey">
 		<value xml:lang="ko"><![CDATA[등록키]]></value>
 	</item>

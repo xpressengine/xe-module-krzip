@@ -35,6 +35,13 @@
 				</div>
 			</div>
 			<div class="x_control-group">
+				<label class="x_control-label">{$lang->cmd_postcode_format}</label>
+				<div class="x_controls">
+					<label for="postcode_format_6" class="x_inline"><input type="radio" name="postcode_format" id="postcode_format_6" value="6" checked="checked"|cond="$module_config->postcode_format != 5" /> {$lang->cmd_postcode_format_6}</label>
+					<label for="postcode_format_5" class="x_inline"><input type="radio" name="postcode_format" id="postcode_format_5" value="5" checked="checked"|cond="$module_config->postcode_format == 5" /> {$lang->cmd_postcode_format_5}</label>
+				</div>
+			</div>
+			<div class="x_control-group">
 				<label class="x_control-label" for="epostapi_regkey">{$lang->cmd_krzip_regkey}</label>
 				<div class="x_controls">
 					<input type="text" name="epostapi_regkey" id="epostapi_regkey" value="{htmlspecialchars($module_config->epostapi_regkey, ENT_COMPAT | ENT_HTML401, 'UTF-8', FALSE)}" disabled="disabled"|cond="$module_config->api_handler != 1" />
