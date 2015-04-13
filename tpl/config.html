@@ -42,6 +42,17 @@
 					<p id="about_epostapi_regkey" class="x_help-block" hidden="hidden">{$lang->about_krzip_epostapi_regkey}</p>
 				</div>
 			</div>
+			<div class="x_control-group">
+				<label class="x_control-label" for="show_box">{$lang->cmd_krzip_show_box}</label>
+				<div class="x_controls">
+					<select name="show_box" id="show_box">
+						<option value="all">{$lang->cmd_krzip_show_box_1}</option>
+						<option value="only_road" selected="selected"|cond="$module_config->show_box == 'only_road'">{$lang->cmd_krzip_show_box_2}</option>
+					</select>
+					<a href="#about_show_box" class="x_icon-question-sign" data-toggle="#about_show_box">{$lang->help}</a>
+					<p id="about_show_box" class="x_help-block" hidden="hidden">{$lang->about_krzip_show_box}</p>
+				</div>
+			</div>
 		</section>
 		<div class="btnArea">
 			<button type="submit" class="x_btn x_btn-primary x_pull-right">{$lang->cmd_registration}</button>
