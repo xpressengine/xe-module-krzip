@@ -48,6 +48,14 @@ class krzipModel extends krzip
 	{
 		if(is_array($values))
 		{
+			$values = array_values($values);
+
+			/* 5자리 우편변호 마이그레이션 */
+			if(count($values) == 4 && preg_match('/^\(?[0-9a-z\x20-]{5,10}\)?$/i', trim($values[0])))
+			{
+				return $values;
+			}
+
 			$values = implode(' ', $values);
 		}
 
