@@ -102,7 +102,7 @@ class krzipModel extends krzip
 		$module_config = $this->getConfig();
 		if($module_config->api_handler != 1)
 		{
-			return new BaseObject(-1, 'msg_invalid_request');
+			return $this->makeObject(-1, 'msg_invalid_request');
 		}
 		if(!isset($query))
 		{
@@ -193,11 +193,11 @@ class krzipModel extends krzip
 				}
 			}
 
-			return new BaseObject(-1, $err_msg);
+			return $this->makeObject(-1, $err_msg);
 		}
 		if(!$result->post)
 		{
-			return new BaseObject(-1, 'msg_krzip_riddling_wrong');
+			return $this->makeObject(-1, 'msg_krzip_riddling_wrong');
 		}
 
 		$item_list = $result->post->itemlist->item;
@@ -207,7 +207,7 @@ class krzipModel extends krzip
 		}
 		if(!$item_list)
 		{
-			return new BaseObject(-1, 'msg_krzip_no_result');
+			return $this->makeObject(-1, 'msg_krzip_no_result');
 		}
 
 		$addr_list = array();
@@ -219,7 +219,7 @@ class krzipModel extends krzip
 			$addr_list[] = $this->getMigratedPostcode('(' . $postcode . ') (' . $jibun_addr . ') ' . $road_addr);
 		}
 
-		$output = new BaseObject();
+		$output = $this->makeObject();
 		$output->add('address_list', $addr_list);
 
 		return $output;
