@@ -62,7 +62,7 @@ class krzipModel extends krzip
 		$output = array('', trim(preg_replace('/\s+/', ' ', $values)), '', '', '');
 
 		/* 우편번호 */
-		if(preg_match('/\(?([0-9]{3}-[0-9]{3})\)?/', $output[1], $matches))
+		if(preg_match('/\(?([0-9-]{5,7})\)?/', $output[1], $matches))
 		{
 			$output[1] = trim(preg_replace('/\s+/', ' ', str_replace($matches[0], '', $output[1])));
 			$output[0] = $matches[1];
@@ -145,7 +145,7 @@ class krzipModel extends krzip
 		$regkey = $module_config->epostapi_regkey;
 
 		$fields = array(
-			'target' => 'postRoad', /* 도로명 주소 */
+			'target' => 'postNew', /* 도로명 주소 */
 			'regkey' => $regkey,
 			'query' => $query
 		);
@@ -213,10 +213,29 @@ class krzipModel extends krzip
 		$addr_list = array();
 		foreach($item_list as $key => $val)
 		{
-			$postcode = substr($val->postcd->body, 0, 3) . '-' . substr($val->postcd->body, 3, 3);
-			$road_addr = $val->lnmaddress->body;
-			$jibun_addr = $val->rnaddress->body;
-			$addr_list[] = $this->getMigratedPostcode('(' . $postcode . ') (' . $jibun_addr . ') ' . $road_addr);
+			$postcode = $val->postcd->body;
+			$road_addr = $val->address->body;
+			$jibun_addr = $val->addrjibun->body;
+			$detail = '';
+			$extra = '';
+
+			if(preg_match('/\((?<detail>.+[읍면동리(마을)(0-9+가)](?:,.*)?)\)/', $road_addr, $matches))
+			{
+				$road_addr = trim(str_replace($matches[0], '', $road_addr));
+				$extra = '(' . $matches['detail'] . ')';
+			}
+			if(preg_match('/\((?<detail>.+[읍면동리(마을)(빌딩)(0-9+가)](?:,.*)?)\)/', $jibun_addr, $matches))
+			{
+				$jibun_addr = '(' . trim(str_replace($matches[0], '', $jibun_addr)) . ')';
+			}
+
+			$addr_list[] = array(
+				$postcode, // 0 우편번호
+				$road_addr, // 1 도로명 주소
+				$jibun_addr, // 2 지번 주소
+				$detail, // 3 상세 주소
+				$extra // 4 부가 정보 (**동, **빌딩)
+			);
 		}
 
 		$output = $this->makeObject();
@@ -231,6 +250,7 @@ class krzipModel extends krzip
 	 * @param mixed $values
 	 * @return string
 	 */
+	//06232 서울특별시 강남구 강남대로 382 서울특별시 강남구 역삼동 825-2
 	function getKrzipCodeSearchHtml($column_name, $values)
 	{
 		$template_config = $this->getConfig();
@@ -242,7 +262,7 @@ class krzipModel extends krzip
 		$api_name = strval(self::$api_list[$template_config->api_handler]);
 		$oTemplate = TemplateHandler::getInstance();
 		$output = $oTemplate->compile($this->module_path . 'tpl', 'template.' . $api_name);
-
+debugPrint($output);
 		return $output;
 	}
 }

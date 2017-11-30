@@ -18,7 +18,7 @@ class krzip extends ModuleObject
 {
 	public static $sequence_id = 0;
 
-	public static $default_config = array('api_handler' => 0, 'postcode_format' => 6, 'show_box' => 'all');
+	public static $default_config = array('api_handler' => 0, 'postcode_format' => 5, 'show_box' => 'all');
 
 	public static $api_list = array('daumapi', 'epostapi');
 
