@@ -18,7 +18,7 @@ class krzip extends ModuleObject
 {
 	public static $sequence_id = 0;
 
-	public static $default_config = array('api_handler' => 0);
+	public static $default_config = array('api_handler' => 0, 'postcode_format' => 5, 'show_box' => 'all');
 
 	public static $api_list = array('daumapi', 'epostapi');
 
@@ -26,12 +26,12 @@ class krzip extends ModuleObject
 
 	function moduleInstall()
 	{
-		return new Object();
+		return $this->makeObject();
 	}
 
 	function moduleUninstall()
 	{
-		return new Object();
+		return $this->makeObject();
 	}
 
 	function checkUpdate()
@@ -41,7 +41,12 @@ class krzip extends ModuleObject
 
 	function moduleUpdate()
 	{
-		return new Object();
+		return $this->makeObject();
+	}
+
+	public function makeObject($code = 0, $message = 'success')
+	{
+		return class_exists('BaseObject') ? new BaseObject($code, $message) : new Object($code, $message);
 	}
 }
 

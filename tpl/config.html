@@ -35,11 +35,29 @@
 				</div>
 			</div>
 			<div class="x_control-group">
+				<label class="x_control-label">{$lang->cmd_krzip_postcode_format}</label>
+				<div class="x_controls">
+					<label for="postcode_format_6" class="x_inline"><input type="radio" name="postcode_format" id="postcode_format_6" value="6" checked="checked"|cond="$module_config->postcode_format != 5" /> {$lang->cmd_krzip_postcode_format_6}</label>
+					<label for="postcode_format_5" class="x_inline"><input type="radio" name="postcode_format" id="postcode_format_5" value="5" checked="checked"|cond="$module_config->postcode_format == 5" /> {$lang->cmd_krzip_postcode_format_5}</label>
+				</div>
+			</div>
+			<div class="x_control-group">
 				<label class="x_control-label" for="epostapi_regkey">{$lang->cmd_krzip_regkey}</label>
 				<div class="x_controls">
 					<input type="text" name="epostapi_regkey" id="epostapi_regkey" value="{htmlspecialchars($module_config->epostapi_regkey, ENT_COMPAT | ENT_HTML401, 'UTF-8', FALSE)}" disabled="disabled"|cond="$module_config->api_handler != 1" />
 					<a href="#about_epostapi_regkey" class="x_icon-question-sign" data-toggle="#about_epostapi_regkey">{$lang->help}</a>
 					<p id="about_epostapi_regkey" class="x_help-block" hidden="hidden">{$lang->about_krzip_epostapi_regkey}</p>
+				</div>
+			</div>
+			<div class="x_control-group">
+				<label class="x_control-label" for="show_box">{$lang->cmd_krzip_show_box}</label>
+				<div class="x_controls">
+					<select name="show_box" id="show_box">
+						<option value="all">{$lang->cmd_krzip_show_box_1}</option>
+						<option value="only_road" selected="selected"|cond="$module_config->show_box == 'only_road'">{$lang->cmd_krzip_show_box_2}</option>
+					</select>
+					<a href="#about_show_box" class="x_icon-question-sign" data-toggle="#about_show_box">{$lang->help}</a>
+					<p id="about_show_box" class="x_help-block" hidden="hidden">{$lang->about_krzip_show_box}</p>
 				</div>
 			</div>
 		</section>
